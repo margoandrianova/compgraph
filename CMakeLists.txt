@@ -16,3 +16,4 @@ set(COMMON_INCLUDES
 )
 
 add_subdirectory(Hw_2_2)
+add_subdirectory(Hw_2_3)
