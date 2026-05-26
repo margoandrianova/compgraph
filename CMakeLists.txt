@@ -1,23 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
-project(CG)
+cmake_minimum_required(VERSION 3.20)
+project(CG C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(external/glfw)
 
-include_directories(
-        external/glad/include
-        external/glm
-        external/glfw/include
+add_library(glad_lib STATIC "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/glad.c")
+target_include_directories(glad_lib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
+
+set(COMMON_INCLUDES
+        "${CMAKE_CURRENT_SOURCE_DIR}/external/glm"
+        "${CMAKE_CURRENT_SOURCE_DIR}/external/glfw/include"
+        "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include"
 )
 
-add_executable(CompGraph
-        main.cpp
-        external/glad/src/glad.c
-)
-
-if(APPLE)
-    target_link_libraries(CompGraph glfw "-framework OpenGL" "-framework Cocoa" "-framework IOKit" "-framework CoreVideo")
-else()
-    target_link_libraries(CompGraph glfw)
-endif()
+add_subdirectory(Hw_2_2)
